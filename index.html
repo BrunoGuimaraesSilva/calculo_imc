@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="./bootstrap/css/bootstrap.min.css" >
+    <link rel="stylesheet" href="./fontawesome/css/brands.css" >
+    <link rel="stylesheet" href="./fontawesome/css/fontawesome.css" >
+    <link rel="stylesheet" href="./fontawesome/css/solid.css" >
+    <script src="./jquery/jquery-3.5.1.slim.min.js" ></script>
+    <script src="./popper/popper.min.js" ></script>
+    <script src="./bootstrap/js/bootstrap.min.js" ></script>
+    <script src="js/sex.js"></script>
+    <title>Cálculo de IMC</title>
+  </head>
+  <body>
+    <div class="container mt-5">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Nome:</th>
+            <th>Sexo:</th>
+            <th>Altura:</th>
+            <th>Peso:</th>
+            <th>IMC:</th>
+          </tr>
+        </thead>
+        <tbody id="calculation">
+        </tbody>
+        <tfoot>
+        </tfoot>
+      </table>  
+    </div>
+    <div class="fixed-bottom">
+      <div class="float-right mb-5 mr-5">
+        <button type="button" class="btn btn-lg btn-outline-success rounded-circle shadow mb-5 bg-light rounded" data-toggle="modal" data-target="#modal">
+          <i class="fa fa-plus"></i>
+        </button>
+      </div>
+    </div>
+    
+    <div class="modal fade" id="modal" tabindex="-1" aria-labelledby="imcModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="imcModalLabel">Cálculo de IMC</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="row ml-4">
+              <div class="form-group col-sm-10">
+                <label for="name">Nome:</label>
+                <input type="text" id="name" class="form-control" placeholder="Digite seu Nome">
+              </div>
+              <div class="form-group col-sm-10">
+                <label for="sex">Sexo:</label>
+                <select class="form-control" id="sex">
+                  <option value="">Escolha seu Sexo</option>
+                </select>
+              </div>
+              <div class="form-group col-sm-10">
+                <label for="height">Altura:</label>
+                <input type="number" step="any" id="height"  placeholder="Digite sua altura" class="form-control">
+              </div>
+              <div class="form-group col-sm-10">
+                <label for="weight">Peso:</label>
+                <input type="number" step="any" id="weight"  placeholder="Digite seu peso" class="form-control">
+              </div>
+              <div class="form-group col-sm-10">
+                <label for="imc">IMC:</label>
+                <input type="number" step="any" id="imc" class="form-control" readonly>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+            <button type="button" class="btn btn-primary" id="save">Salvar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+
+      const name = document.getElementById("name");
+      const sex = document.getElementById("sex");
+      const weight = document.getElementById("weight");
+      const height = document.getElementById("height");
+      const imc = document.getElementById("imc");
+      const save = document.getElementById("save");
+      const calculation = document.getElementById("calculation");
+              
+        let table = {};
+
+        name.addEventListener("change",()=>{
+          table = {name:name.value};
+        })
+    
+        data.map((d)=>{
+          const opt = document.createElement("option");
+          opt.text = d.value;
+
+            sex.appendChild(opt);
+        })
+        
+        sex.addEventListener("change",()=>{
+          const value = sex.options[sex.selectedIndex];
+          table = Object.assign({sex:value.text},table);
+        })
+
+        weight.addEventListener("change",()=>{
+          let he = (height.value);
+          let we = (weight.value);
+          let calcImc = we/(he*he);
+          imc.value = calcImc;
+          table = Object.assign({height:height.value,imc:imc.value,weight:weight.value},table);
+        })
+        
+        save.addEventListener("click",()=>{
+          const tr = document.createElement("tr");
+            let td = `<td>${table.name}</td>
+                    <td>${table.sex}</td>
+                    <td>${table.height}</td>
+                    <td>${table.weight}</td>
+                    <td>${table.imc}</td>`;
+            tr.innerHTML = td;
+            calculation.appendChild(tr);
+
+            name.value = null;
+            sex.selectedIndex = null;
+            height.value = null;
+            weight.value = null;
+            imc.value = null;
+
+            $("#modal").modal("hide");
+        })
+
+    </script>
+  </body>
+</html>
